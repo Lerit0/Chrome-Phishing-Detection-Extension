@@ -1,0 +1,26 @@
+:root {
+    --main-bg-color: #12161c;
+    --main-panel: #1a2029;
+    --line: #262e39;
+
+    --text: #e7e9ec;
+    --text-dim: #8892a0;
+
+    --safe: #4f9c86;
+    --caution: #dba13c;
+    --danger: #c1483f;
+
+    --radius: 3px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    width: 320px;
+    background: var(--main-bg-color);
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
