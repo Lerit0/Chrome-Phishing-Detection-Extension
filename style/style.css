@@ -12,9 +12,12 @@
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  /* change this background atributte depending on the danger */
-  background: var(--safe);
+  background: var(--safe); /* default, before any scan */
 }
+
+body[data-state="scanning"] .mark { background: var(--caution); }
+body[data-state="safe"] .mark { background: var(--safe); }
+body[data-state="danger"] .mark { background: var(--danger); }
 
 .bar h1 {
   margin: 0;
@@ -63,26 +66,26 @@
 
 /* Result states — done through JS via [data-state] */
 
-.status[data-state="scanning"] .status__ring {
+body[data-state="scanning"] .status__ring {
   border-color: var(--caution);
   animation: sweep 1.1s linear infinite;
 }
 
-.status[data-state="safe"] .status__ring {
+body[data-state="safe"] .status__ring {
   border-color: var(--safe);
   border-style: solid;
 }
 
-.status[data-state="safe"] .status__text {
+body[data-state="safe"] .status__text {
   color: var(--safe);
 }
 
-.status[data-state="danger"] .status__ring {
+body[data-state="danger"] .status__ring {
   border-color: var(--danger);
   border-style: solid;
 }
 
-.status[data-state="danger"] .status__text {
+body[data-state="danger"] .status__text {
   color: var(--danger);
 }
 
