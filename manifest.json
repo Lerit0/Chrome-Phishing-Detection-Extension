@@ -4,7 +4,15 @@
     "version": "1.0",
     "manifest_version": 3,
     "action": {
-        "default_popup": "index.html",
+        "default_popup": "popup.html",
         "default_icon": "logo.png"
-    }
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://mail.google.com/*"],
+            "js": ["content.js"]
+        }
+    ],
+    "permissions": ["activeTab", "scripting"],
+    "host_permissions": ["https://api.languagetool.org/*"]
 }
