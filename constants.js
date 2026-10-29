@@ -55,9 +55,12 @@ export const KNOWN_BRAND_DOMAINS = {
 };
 
 // TODO: Check this
-const SUSPICIOUS_CATEGORIES = [
+export const SUSPICIOUS_CATEGORIES = [
     "TYPOS",
     "GRAMMAR",
     "CONFUSED_WORDS",
     "REDUNDANCY",
 ];
+
+export const RISKY_EXTENSION = /\.(exe|scr|js|vbs|iso|lnk|html?|docm|xlsm|jar)$/i;
+export const DOUBLE_EXTENSION = /\.(pdf|docx?|xlsx?|jpg|png)\.(exe|scr|js|vbs|lnk)$/i;

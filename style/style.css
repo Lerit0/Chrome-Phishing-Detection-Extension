@@ -64,6 +64,115 @@ body[data-state="danger"] .mark { background: var(--danger); }
   line-height: 1.5;
 }
 
+.results {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.score {
+  padding: 11px 12px 12px;
+  background: var(--main-panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.score__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 9px;
+  color: var(--text-dim);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.score__value {
+  color: var(--text);
+  font-size: 12px;
+}
+
+.score__track {
+  height: 5px;
+  overflow: hidden;
+  background: var(--line);
+  border-radius: 999px;
+}
+
+.score__fill {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--safe);
+  border-radius: inherit;
+  transition: width 0.3s ease, background 0.2s ease;
+}
+
+body[data-state="suspicious"] .score__fill {
+  background: var(--caution);
+}
+
+body[data-state="danger"] .score__fill {
+  background: var(--danger);
+}
+
+.checks {
+  margin-top: 16px;
+}
+
+.checks__title {
+  margin: 0 0 7px;
+  color: var(--text-dim);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.checks__list {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  list-style: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 10px;
+  background: var(--main-panel);
+  font-size: 12px;
+}
+
+.check + .check {
+  border-top: 1px solid var(--line);
+}
+
+.check__name {
+  color: var(--text);
+}
+
+.check__status {
+  color: var(--safe);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.check[data-status="flagged"] .check__status {
+  color: var(--caution);
+}
+
+.check[data-status="failed"] .check__status {
+  color: var(--text-dim);
+}
+
 /* Result states — done through JS via [data-state] */
 
 body[data-state="scanning"] .status__ring {

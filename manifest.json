@@ -10,9 +10,13 @@
     "content_scripts": [
         {
             "matches": ["https://mail.google.com/*"],
-            "js": ["content.js"]
+            "js": ["emailCollector.js"]
         }
     ],
     "permissions": ["activeTab", "scripting"],
-    "host_permissions": ["https://api.languagetool.org/*", "https://www.virustotal.com/api/v3/"]
+    "host_permissions": [
+        "https://api.languagetool.org/*",
+        "https://www.virustotal.com/*",
+        "https://mail.google.com/*"
+    ]
 }

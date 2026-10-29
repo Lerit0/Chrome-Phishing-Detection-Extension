@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phishing Dashboard</title>
-    <!-- Change the style names -->
     <link rel="stylesheet" href="style/normalize.css"/>
     <link rel="stylesheet" href="style/base.css"/>
     <link rel="stylesheet" href="style/style.css"/>
-    <script src="config.js" defer></script>
-    <script src="script.js" defer></script>
+    <script type="module" src="popup.js"></script>
 </head>
 <body data-state="idle">
     <header class="bar">
@@ -21,7 +19,21 @@
     <main class="status">
         <div class="status__ring" aria-hidden="true"></div>
         <p class="status__text">Ready to check</p>
-        <p class="status__detail">No scan run yet in this tab.</p>
+        <section class="results" aria-live="polite" hidden>
+            <div class="score">
+                <div class="score__header">
+                    <span>Risk score</span>
+                    <strong class="score__value">0/100</strong>
+                </div>
+                <div class="score__track" aria-hidden="true">
+                    <span class="score__fill"></span>
+                </div>
+            </div>
+            <div class="checks">
+                <p class="checks__title">Checks performed</p>
+                <ul class="checks__list"></ul>
+            </div>
+        </section>
     </main>
  
     <button class="scan-btn">Scan current email</button>
