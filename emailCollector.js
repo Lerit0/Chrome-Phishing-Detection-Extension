@@ -1,5 +1,3 @@
-console.log("content script loaded");
-
 const getAttachments = () => {
     const chips = document.querySelectorAll("span.aZo[download_url]");
     const attachments = [];

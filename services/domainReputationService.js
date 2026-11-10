@@ -1,12 +1,7 @@
 import { CONFIG } from "../config.js";
+import { getDomain } from "./utils.js";
 
 const { VT_API_KEY } = CONFIG;
-
-const getDomain = (email) => {
-    const parts = email.split("@");
-    if (parts.length < 2) return "";
-    return parts[1].toLowerCase();
-};
 
 export const checkDomainReputation = async (senderEmail) => {
     const result = {
@@ -16,7 +11,7 @@ export const checkDomainReputation = async (senderEmail) => {
         reasons: [],
     };
 
-    // Ge the domain from the sender email
+    // Get the domain from the sender email
     const domain = getDomain(senderEmail);
     if (domain === "") {
         result.status = "failed";

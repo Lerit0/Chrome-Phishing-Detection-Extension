@@ -58,17 +58,17 @@ const setScanning = () => {
     resultsPanel.hidden = true;
 };
  
-const setSafe = (reasons) => {
+const setSafe = () => {
     document.body.dataset.state = "safe";
     text.textContent = "No red flags found";
 };
  
-const setSuspicious = (reasons) => {
+const setSuspicious = () => {
     document.body.dataset.state = "suspicious";
     text.textContent = "Suspicious";
 };
  
-const setDanger = (reasons) => {
+const setDanger = () => {
     document.body.dataset.state = "danger";
     text.textContent = "DANGER";
 };
@@ -83,17 +83,13 @@ const showVerdict = (verdict, results) => {
     renderResults(verdict, results);
 
     if (verdict.level === "danger") {
-        setDanger(verdict.reasons);
+        setDanger();
     } else if (verdict.level === "suspicious") {
-        setSuspicious(verdict.reasons);
+        setSuspicious();
     } else if (verdict.level === "unknown") {
         showError("Could not run any check");
     } else {
-        let reasons = verdict.reasons;
-        if (reasons.length === 0) {
-            reasons = ["No suspicious patterns found"];
-        }
-        setSafe(reasons);
+        setSafe();
     }
 };
 
@@ -140,7 +136,7 @@ btn.addEventListener("click", async () => {
         // [ { check, status, score, reasons }, ... ]
         const results = await analyzeEmail(email);
  
-        // Combine into one verdict: { score, level, reasons, failedCount }
+        // Combine into one verdict: { score, level, reasons }
         const verdict = calculateRisk(results);
 
         // Render

@@ -1,10 +1,5 @@
 import { KNOWN_BRAND_DOMAINS } from "../constants.js";
-
-const getDomain = (email) => {
-    const parts = email.split("@");
-    if (parts.length < 2) return "";
-    return parts[1].toLowerCase();
-};
+import { getDomain } from "./utils.js";
 
 const isKnownRealDomain = (domain) => {
     const brands = Object.keys(KNOWN_BRAND_DOMAINS);
@@ -77,7 +72,6 @@ export const checkEmailDomain = (senderEmail) => {
     }
 
     // Punycode domains
-    // TODO: Check this
     if (domain.includes("xn--")) {
         result.score += 20;
         result.reasons.push("Domain uses lookalike characters");
