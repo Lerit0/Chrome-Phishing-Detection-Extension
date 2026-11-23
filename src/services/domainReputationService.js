@@ -1,5 +1,5 @@
 import { CONFIG } from "../config.js";
-import { getDomain } from "./utils.js";
+import { getDomain } from "../utils/utils.js";
 
 const { VT_API_KEY } = CONFIG;
 

@@ -64,3 +64,14 @@ export const SUSPICIOUS_CATEGORIES = [
 
 export const RISKY_EXTENSION = /\.(exe|scr|js|vbs|iso|lnk|html?|docm|xlsm|jar)$/i;
 export const DOUBLE_EXTENSION = /\.(pdf|docx?|xlsx?|jpg|png)\.(exe|scr|js|vbs|lnk)$/i;
+export const URL_SHORTENERS = [
+    "bit.ly",
+    "tinyurl.com",
+    "t.co",
+    "goo.gl",
+    "is.gd",
+    "ow.ly",
+    "cutt.ly",
+    "rebrand.ly",
+    "shorturl.at",
+];

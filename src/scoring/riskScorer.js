@@ -3,6 +3,7 @@ const WEIGHTS = {
     domainReputation: 1,
     grammar: 1,
     attachments: 1,
+    links: 1,
 };
 
 const DANGER_THRESHOLD = 60;

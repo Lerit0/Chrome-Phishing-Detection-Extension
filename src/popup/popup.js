@@ -1,5 +1,5 @@
-import { analyzeEmail } from "./services/phishingService.js";
-import { calculateRisk } from "./riskScorer.js";
+import { analyzeEmail } from "../services/phishingService.js";
+import { calculateRisk } from "../scoring/riskScorer.js";
 
 const btn = document.querySelector(".scan-btn");
 const text = document.querySelector(".status__text");
@@ -13,6 +13,7 @@ const checkLabels = {
     domainReputation: "Domain reputation",
     grammar: "Message grammar",
     attachments: "Attachments",
+    links: "Links",
 };
 
 const formatCheckName = (check) =>
@@ -48,6 +49,18 @@ const renderResults = (verdict, results) => {
         status.textContent = formatStatus(result);
 
         item.append(name, status);
+
+        if (result.reasons.length > 0) {
+            const reasons = document.createElement("ul");
+            reasons.className = "check__reasons";
+            for (const reason of result.reasons) {
+                const reasonItem = document.createElement("li");
+                reasonItem.textContent = reason;
+                reasons.append(reasonItem);
+            }
+            item.append(reasons);
+        }
+
         checksList.append(item);
     }
 };
@@ -116,7 +129,7 @@ btn.addEventListener("click", async () => {
         }
  
         // Collect email data
-        // { sender: "a@b.com", body: "text", attachments: [{ name, url }] }
+        // { sender: "a@b.com", senderName, body: "text", links: [{ text, href }], attachments: [{ name, url }] }
         let email = null;
         try {
             email = await collectEmail(tab);

@@ -2,14 +2,16 @@ import { checkGrammar } from "./grammarService.js";
 import { checkEmailDomain } from "./emailDomainService.js";
 import { checkDomainReputation } from "./domainReputationService.js";
 import { checkAttachments } from "./attachmentService.js";
+import { checkLinks } from "./linkService.js";
 
 export const analyzeEmail = async (email) => {
     // allSettled: one check crashing does not stop the others
     const settled = await Promise.allSettled([
-        checkEmailDomain(email.sender),
+        checkEmailDomain(email.sender, email.senderName),
         checkDomainReputation(email.sender),
         checkGrammar(email.body),
         checkAttachments(email.attachments),
+        checkLinks(email.links || []),
     ]);
  
     // allSettled returns { status, value } wrappers

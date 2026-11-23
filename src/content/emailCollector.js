@@ -20,22 +20,34 @@ const getAttachments = () => {
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     if (msg.type === "GET_EMAIL_INFO") {
         let sender = "";
+        let senderName = "";
         const senderElement = document.querySelector(".gD");
         if (senderElement) {
             sender = senderElement.getAttribute("email");
+            senderName = senderElement.getAttribute("name") || "";
         }
 
         let body = "";
+        const links = [];
         const bodyElement = document.querySelector(".a3s");
         if (bodyElement) {
             body = bodyElement.textContent.trim().replace(/\s+/g, " ");
+
+            for (const anchor of bodyElement.querySelectorAll("a[href]")) {
+                links.push({
+                    text: anchor.textContent.trim(),
+                    href: anchor.getAttribute("href"),
+                });
+            }
         }
 
         const attachments = getAttachments();
 
         sendResponse({
             sender: sender,
+            senderName: senderName,
             body: body,
+            links: links,
             attachments: attachments,
         });
     }

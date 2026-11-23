@@ -4,13 +4,13 @@
     "version": "1.0",
     "manifest_version": 3,
     "action": {
-        "default_popup": "popup.html",
-        "default_icon": "logo.png"
+        "default_popup": "src/popup/popup.html",
+        "default_icon": "assets/logo.png"
     },
     "content_scripts": [
         {
             "matches": ["https://mail.google.com/*"],
-            "js": ["emailCollector.js"]
+            "js": ["src/content/emailCollector.js"]
         }
     ],
     "permissions": ["activeTab", "scripting"],
