@@ -5,7 +5,7 @@ A Chrome extension that scans the email open in Gmail and gives it a phishing ri
 ## Setup
 
 1. Get a free API key from [VirusTotal](https://www.virustotal.com/).
-2. Create a `config.js` file in the project root:
+2. Create a `src/config.js` file:
    ```js
    export const CONFIG = { VT_API_KEY: "your-virustotal-api-key" };
    ```
@@ -14,31 +14,47 @@ A Chrome extension that scans the email open in Gmail and gives it a phishing ri
 
 ## How it works
 
-1. **`emailCollector.js`** is a content script that runs on Gmail. When the popup asks, it reads the open email's sender, body and attachments from the page.
-2. **`popup.js`** runs when the scan button is clicked. It gets the email data from the content script and passes it to the checks.
-3. **`services/phishingService.js`** runs all the checks at the same time and collects their results, so if one check crashes the others still run. Each check returns `{ check, status, score, reasons }`.
-4. **`riskScorer.js`** adds the scores into one 0–100 score and picks a level:
+1. **`src/content/emailCollector.js`** is a content script that runs on Gmail. When the popup asks, it reads the open email's sender, body and attachments from the page.
+2. **`src/popup/popup.js`** runs when the scan button is clicked. It gets the email data from the content script and passes it to the checks.
+3. **`src/services/phishingService.js`** runs all the checks at the same time and collects their results, so if one check crashes the others still run. Each check returns `{ check, status, score, reasons }`.
+4. **`src/scoring/riskScorer.js`** adds the scores into one 0–100 score and picks a level:
    - **safe**: below 25
    - **suspicious**: 25 or more
    - **danger**: 60 or more, or any check that returns a score of 100
-5. **`popup.js`** shows the verdict and the result of each check.
+5. **`src/popup/popup.js`** shows the verdict and the result of each check.
 
-## Checks (`services/`)
+## Checks (`src/services/`)
 
 | File | What it does |
 | --- | --- |
-| `emailDomainService.js` | Flags sender domains that imitate a known brand (`paypal123.com`), use lookalike characters (`paypa1.com`, `rnicrosoft.com`) or punycode (`xn--`) |
+| `emailDomainService.js` | Flags sender domains that imitate a known brand (`paypal123.com`), use lookalike characters (`paypa1.com`, `rnicrosoft.com`) or punycode (`xn--`), and sender names that claim a brand the domain doesn't belong to (`"PayPal" <x@gmail.com>`) |
+| `linkService.js` | Flags links whose text shows one address but go to another, links to IP addresses, URL shorteners, and link domains that imitate a brand or use punycode |
 | `domainReputationService.js` | Looks up the sender's domain on VirusTotal |
 | `grammarService.js` | Sends the body to the LanguageTool API and counts spelling/grammar mistakes |
 | `attachmentService.js` | Flags risky or double file extensions (`invoice.pdf.exe`), then hashes each file and looks it up on VirusTotal |
 
+## Project structure
+
+```
+manifest.json
+assets/            logo
+src/
+  config.js        VirusTotal API key (gitignored)
+  constants.js
+  content/         Gmail content script
+  popup/           popup HTML, JS and styles
+  scoring/         risk score calculation
+  services/        the phishing checks
+  utils/           shared helpers
+```
+
 ## Other files
 
-- **`constants.js`**: known brand domains, the grammar categories that count as suspicious, and the risky file extension patterns
-- **`services/utils.js`**: shared helpers used by the checks (`getDomain`)
-- **`config.js`**: holds the VirusTotal API key (`VT_API_KEY`). It's gitignored, so it isn't in the repo.
+- **`src/constants.js`**: known brand domains, the grammar categories that count as suspicious, the risky file extension patterns, and known URL shorteners
+- **`src/utils/utils.js`**: shared helpers used by the checks (`getDomain`, and the brand-imitation logic shared by the sender and link checks)
+- **`src/config.js`**: holds the VirusTotal API key (`VT_API_KEY`). It's gitignored, so it isn't in the repo.
 - **`manifest.json`**: the extension's settings: the Gmail content script, permissions, and the APIs it is allowed to call
-- **`popup.html`** and **`style/`**: the popup's layout and styles
+- **`src/popup/popup.html`** and **`src/popup/styles/`**: the popup's layout and styles
 
 ## Privacy
 
